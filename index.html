@@ -1,9 +1,283 @@
-<!doctype html>
-<html>
-  <head>
-    <title>LEAP COIN2025</title>
-  </head>
-  <body>
-    <p>Leap.</p>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$LEAP 2025</title>
+    <meta name="description" content="Join the most bullish leap in crypto history with $LEAP on Solana. Ready to moon in 2025!">
+    
+    <!-- Import required libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: rgb(51, 65, 85);
+            background: linear-gradient(to bottom, rgb(230, 242, 255), rgb(204, 230, 255));
+        }
+
+        .snow-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -20px;
+            width: var(--size);
+            height: var(--size);
+            background: white;
+            border-radius: 50%;
+            opacity: var(--opacity);
+            left: var(--left);
+            animation: snowfall var(--duration) linear infinite;
+            animation-delay: var(--delay);
+            filter: blur(0.5px);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-10vh) translateX(-20px) scale(1);
+            }
+            50% {
+                transform: translateY(45vh) translateX(20px) scale(1.2);
+            }
+            100% {
+                transform: translateY(100vh) translateX(-20px) scale(1);
+            }
+        }
+
+        .neon-card-glow {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, 
+                rgba(173, 216, 230, 0.3) 0%,
+                rgba(173, 216, 230, 0.1) 25%,
+                transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #4169E1, #9370DB);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .button {
+            padding: 12px 24px;
+            border-radius: 9999px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .twitter-button {
+            background: linear-gradient(90deg, #1E40AF, #2563EB);
+            color: white;
+        }
+
+        .telegram-button {
+            background: linear-gradient(90deg, #166534, #22C55E);
+            color: white;
+        }
+
+        .white-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaping-image {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            animation: leap 4s infinite cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center bottom;
+        }
+
+        @keyframes leap {
+            0% {
+                transform: translateX(-100%) translateY(0) rotate(-15deg) scale(0.8);
+            }
+            25% {
+                transform: translateX(25vw) translateY(-200px) rotate(0deg) scale(1.2);
+            }
+            50% {
+                transform: translateX(50vw) translateY(0) rotate(15deg) scale(0.8);
+            }
+            75% {
+                transform: translateX(75vw) translateY(-200px) rotate(0deg) scale(1.2);
+            }
+            100% {
+                transform: translateX(100vw) translateY(0) rotate(-15deg) scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script>
+        const { useState, useEffect } = React;
+        const { motion, AnimatePresence } = Motion;
+
+        function Home() {
+            const [year, setYear] = useState(2024);
+            const [timeLeft, setTimeLeft] = useState({
+                days: 0,
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            });
+
+            useEffect(() => {
+                const yearInterval = setInterval(() => {
+                    setYear((prev) => (prev === 2025 ? 2024 : 2025));
+                }, 2000);
+
+                const countdownInterval = setInterval(() => {
+                    const now = new Date();
+                    const target = new Date('2025-01-01T00:00:00');
+                    const difference = target.getTime() - now.getTime();
+
+                    if (difference > 0) {
+                        setTimeLeft({
+                            days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                            hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                            minutes: Math.floor((difference / 1000 / 60) % 60),
+                            seconds: Math.floor((difference / 1000) % 60)
+                        });
+                    } else {
+                        clearInterval(countdownInterval);
+                    }
+                }, 1000);
+
+                return () => {
+                    clearInterval(yearInterval);
+                    clearInterval(countdownInterval);
+                };
+            }, []);
+
+            return React.createElement('main', { className: "min-h-screen relative overflow-hidden" },
+                // Snowy Background
+                React.createElement('div', { className: "fixed inset-0 bg-gradient-to-b from-blue-100 to-blue-200" },
+                    React.createElement('div', { className: "absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[size:20px_20px] [background-position:center]" })
+                ),
+
+                // Snow Effect
+                React.createElement('div', { className: "snow-container" },
+                    [...Array(150)].map((_, index) => 
+                        React.createElement('div', {
+                            key: index,
+                            className: "snowflake",
+                            style: {
+                                '--size': `${Math.random() * 8 + 3}px`,
+                                '--left': `${Math.random() * 100}vw`,
+                                '--opacity': Math.random() * 0.7 + 0.3,
+                                '--duration': `${Math.random() * 15 + 8}s`,
+                                '--delay': `-${Math.random() * 20}s`,
+                            }
+                        })
+                    )
+                ),
+
+                // Leaping Image
+                React.createElement('div', { className: "relative" },
+                    React.createElement('img', {
+                        src: 'image.png',
+                        alt: 'Leaping Image',
+                        className: "leaping-image",
+                        style: {
+                            position: 'fixed',
+                            top: '60%',
+                            zIndex: 10
+                        }
+                    })
+                ),
+
+                // Main Content
+                React.createElement('div', { className: "relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-20" },
+                    // Title
+                    React.createElement(motion.h1, {
+                        className: "gradient-text text-7xl md:text-9xl font-bold mb-4",
+                        animate: { scale: [1, 1.02, 1] },
+                        transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                    }, `$LEAP ${year}`),
+
+                    // Subtitle
+                    React.createElement('p', {
+                        className: "text-2xl text-gray-800 mb-6 text-center"
+                    }, "This Year We Leap to the Moon 🐸🚀"),
+
+                    // Subtitle 2
+                    React.createElement('p', {
+                        className: "text-xl text-blue-800 mb-12 font-semibold text-center"
+                    }, "Bullish 2025 with Leap ($LEAP) - The Only Coin That's Ready to Leap to the Mooooon!"),
+
+                    // White Card
+                    React.createElement('div', { className: "white-card mb-12 max-w-3xl w-full" },
+                        React.createElement('h2', {
+                            className: "text-3xl font-bold text-gray-800 mb-6 text-center"
+                        }, "Leap into the Future"),
+                        React.createElement('p', {
+                            className: "text-lg text-gray-700 mb-8 text-center"
+                        }, "As Times Square counts down to 2025, be part of the most exciting journey in crypto. $LEAP on Solana - Where every moment is a leap towards financial freedom!"),
+                        React.createElement('div', {
+                            className: "flex flex-col sm:flex-row justify-center gap-4"
+                        },
+                            React.createElement('a', {
+                                href: "#",
+                                className: "button twitter-button"
+                            }, "Join the Leap"),
+                            React.createElement('a', {
+                                href: "#",
+                                className: "button telegram-button"
+                            }, "Telegram Community")
+                        )
+                    ),
+
+                    // Countdown Timer
+                    React.createElement('div', { className: "white-card" },
+                        React.createElement('h3', { className: "text-2xl font-bold mb-4 text-center" }, "Countdown to 2025"),
+                        React.createElement('div', { className: "grid grid-cols-4 gap-8" },
+                            Object.entries(timeLeft).map(([key, value]) =>
+                                React.createElement('div', { key, className: "flex flex-col items-center" },
+                                    React.createElement('span', { className: "text-4xl font-bold text-blue-600" }, value.toString().padStart(2, '0')),
+                                    React.createElement('span', { className: "text-sm uppercase" }, key)
+                                )
+                            )
+                        )
+                    )
+                ),
+
+                // Footer
+                React.createElement('footer', { className: "absolute bottom-4 w-full text-center text-gray-600 text-sm" },
+                    "© 2024 $LEAP. All rights reserved. Leap responsibly."
+                )
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(React.createElement(Home));
+    </script>
+</body>
+</html> 
